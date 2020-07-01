@@ -1,0 +1,118 @@
+<div class="card-body">
+<div align='center'><h5> Git Activity Details</h5></div>
+<form>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="repository">Repository</label>
+      <select  class="form-control" id = "repository" [(ngModel)]="repo" name="repository" #repository="ngModel" required (change)="setRepo($event.target.value)" (ngModelChange)="getCommitCountDetailsWeek()"  style="width: 200px;">
+      
+      <option [value] = "response.repoName" *ngFor="let response of this.repoList">
+        {{response.repoName}}
+      </option>
+      </select>
+      <div  [hidden]="repository.valid || repository.pristine" class="alert alert-danger">
+        Please select a Repository
+      </div>
+        </div>
+      </div>
+  <div class="col-md-3">
+    <div class="form-group">
+      <label for="users">User</label>
+  <select  class="form-control" id = "users" [(ngModel)]="user"  name="users" #users="ngModel" required (ngModelChange)="getCommitCountDetailsWeek()"  style="width: 200px;">
+   
+  <option value="Team">Team</option>
+  <option [value] = "response.userId" *ngFor="let response of this.userlist">
+    {{response.userId}}
+  </option>
+  </select>
+  <div  [hidden]="users.valid || users.pristine" class="alert alert-danger">
+    Please select an user
+  </div>
+    </div>
+  </div>
+
+  
+  <div class="col-md-3">
+    <div class="form-group">
+    <label for="branches">Branch</label>
+    <select  class="form-control" id = "branches" [(ngModel)]="branch" name="branches" #branches="ngModel" required (ngModelChange)="getCommitCountDetailsWeek()" style="width: 200px;">
+    
+    <option [value] = "bran" *ngFor="let bran of branchList">
+      {{bran}}
+    </option>
+    </select>
+    <div  [hidden]="branches.valid || branches.pristine" class="alert alert-danger">
+      Please select a branch
+    </div>
+</div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="form-group">
+      <label for="time">Time Period</label>
+  <select class="form-control" id="timeperiod" [(ngModel)]="time" name="timeperiod" #timeperiod="ngModel" required (ngModelChange)="getCommitCountDetailsWeek()"  style="width: 200px;">
+  
+  <option value = "oneweek">1 Week</option>
+  <option value = "twoweeks">2 Weeks</option>
+  </select>
+  <div  [hidden]="timeperiod.valid || timeperiod.pristine" class="alert alert-danger">
+    Please select a time period
+  </div>
+    </div>
+  </div>
+
+  <div class="col-md-3" >
+       <div class="form-group" >
+           <label>Select End Date </label>
+         <br>
+         <input type="date" class="form-control " id="endDate" [max]= "getToday()" [(ngModel)]="endDate"  required (ngModelChange)="getCommitCountDetailsWeek()" name="endDate" style="width: 200px;">
+         
+        </div>
+       
+  </div>
+
+  </div>
+  </div>
+  <div>
+  
+    <div *ngIf = "result"  style = "display:block; width:700px ; height:300px" >
+      <canvas baseChart 
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"
+      [colors] = "barChartColors"
+      (chart-click)="onClick($event)">
+              </canvas> 
+            </div>
+    
+       
+          </div>
+    
+          <div style="width:100%;">
+            <canvas id="myChart" width="700" height="250" #mychart></canvas>
+          </div>
+        </form>
+  
+  
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+              </div>
+              <div class="modal-body">
+               You clicked in June
+             </div>
+             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
