@@ -4,7 +4,7 @@ import { KeycloakConfig } from 'keycloak-angular';
 // The list of file replacements can be found in `angular.json`.
 
 export const keycloakConfig = {
-  url: 'http://localhost:8080/auth',
+  url: 'http://13.234.254.213:8080/auth',
   realm: 'DAG',
   clientId: 'GitFocus'
 };
