@@ -84,6 +84,7 @@ export class BubbleComponent implements OnInit {
   public modified;
   added: string;
   commitDetailsByStatus: {};
+  branchName: any;
 
   constructor(private gitService: GitserviceModule,public dialog: MatDialog, private router: Router, private route: ActivatedRoute) {
 
@@ -346,25 +347,7 @@ export class BubbleComponent implements OnInit {
     
     console.log("this.commitDetails",this.userCommitDetails);
 
-    let commitDetailsByStatus = {};
     
-    this.userCommitDetails[0].fileNameArray.forEach((file, index) => {
-      if(commitDetailsByStatus[this.userCommitDetails[0].fileStatusArray[index]]) {
-        commitDetailsByStatus[this.userCommitDetails[0].fileStatusArray[index]].push({
-          file,
-          lineAdded: this.userCommitDetails[0].linesAddedArray[index],
-          linesRemoved: this.userCommitDetails[0].linesRemovedArray[index]
-        })
-      } else {
-        commitDetailsByStatus[this.userCommitDetails[0].fileStatusArray[index]] = [{
-          file,
-          lineAdded: this.userCommitDetails[0].linesAddedArray[index],
-          linesRemoved: this.userCommitDetails[0].linesRemovedArray[index]
-        }]
-      }
-    })
-console.log(commitDetailsByStatus);
-this.commitDetailsByStatus = commitDetailsByStatus;
     /*const out1 = await this.gitService.getDailyUserPull(this.user, this.repo, this.commDate, this.branch).toPromise();
     
     this.pullRequestDetails = out1;*/
@@ -439,14 +422,14 @@ this.commitDetailsByStatus = commitDetailsByStatus;
 
 
   
-    openDialog(clickedUser,commitDate,sumAll,repo,sumLegacy,commitDetailsByStatus) {
+    openDialog(clickedUser,commitDate,sumAll,repo,sumLegacy,commitDetailsByStatus,branchName) {
    
     const dialogRef = this.dialog.open(CommitDetailsComponent, {
       
       height:'500px',width: '800px',
      
       data: {
-        clickedUser,commitDate,sumAll,repo,sumLegacy,commitDetailsByStatus     //muniqs,auniqs,modifiedArray,mlinesAddedArray,mlinesRemovedArray,addedArray,alinesAddedArray,alinesRemovedArray
+        clickedUser,commitDate,sumAll,repo,sumLegacy,commitDetailsByStatus,branchName     //muniqs,auniqs,modifiedArray,mlinesAddedArray,mlinesRemovedArray,addedArray,alinesAddedArray,alinesRemovedArray
       }
     });
    
@@ -478,14 +461,34 @@ this.commitDetailsByStatus = commitDetailsByStatus;
     this.totalLinesAdded = this.userCommitDetails[indexValue].totalLinesAdded;
     this.totalLinesRemoved =this.userCommitDetails[indexValue].totalLinesRemoved;
     this.fileStatusArray=this.userCommitDetails[indexValue].fileStatusArray;
-    
+    this.branchName=this.userCommitDetails[indexValue].branchName;
    
     
     this.sumAll=this.ConvertToInt(this.totalLinesAdded)+this.ConvertToInt(this.totalLinesRemoved);
         
     this.sumLegacy=this.ConvertToInt(this.totalLinesAdded)+this.ConvertToInt(this.totalLinesRemoved);
     
-    this.openDialog(this.clickedUser,this.commitDate,this.sumAll,this.repo,this.sumLegacy,this.commitDetailsByStatus);
+    let commitDetailsByStatus = {};
+    
+    this.userCommitDetails[indexValue].fileNameArray.forEach((file, index) => {
+      if(commitDetailsByStatus[this.userCommitDetails[indexValue].fileStatusArray[index]]) {
+        commitDetailsByStatus[this.userCommitDetails[indexValue].fileStatusArray[index]].push({
+          file,
+          lineAdded: this.userCommitDetails[indexValue].linesAddedArray[index],
+          linesRemoved: this.userCommitDetails[indexValue].linesRemovedArray[index]
+        })
+      } else {
+        commitDetailsByStatus[this.userCommitDetails[indexValue].fileStatusArray[index]] = [{
+          file,
+          lineAdded: this.userCommitDetails[indexValue].linesAddedArray[index],
+          linesRemoved: this.userCommitDetails[indexValue].linesRemovedArray[index]
+        }]
+      }
+    })
+console.log('commitDetailsByStatus' ,commitDetailsByStatus);
+this.commitDetailsByStatus = commitDetailsByStatus;
+
+    this.openDialog(this.clickedUser,this.commitDate,this.sumAll,this.repo,this.sumLegacy,this.commitDetailsByStatus,this.branchName);
 
   }
 

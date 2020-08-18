@@ -18,14 +18,14 @@
   
   
 
-    <img height = 15 width = 18 src="assets/images/pull_old.png"><label style="margin-left: 5px;" for="usr">Code Commit</label><br>
+    <img height = 15 width = 18 src="assets/images/pull_old.PNG"><label style="margin-left: 5px;" for="usr">Code Commit</label><br>
   
 
-      <img height = 15 width = 18 src="assets/images/dag_profile.png"><label style="margin-left: 5px;" for="usr">{{data.user}}</label><br>
+      <img height = 15 width = 18 src="assets/images/dag_profile.PNG"><label style="margin-left: 5px;" for="usr">{{data.user}}</label><br>
     
   
-      <img height = 15 width = 18 src="assets/images/calendar.png"><label style="margin-left: 5px;" for="usr">{{data.pullCommitDate}}</label><br>
-      <img height = 19 width = 18 src="assets/images/github.png"><label style="margin-left: 5px;" for="usr">{{data.branch}}</label><br></td>
+      <img height = 15 width = 18 src="assets/images/calendar.PNG"><label style="margin-left: 5px;" for="usr">{{data.pullCommitDate}}</label><br>
+      <img height = 19 width = 18 src="assets/images/github.PNG"><label style="margin-left: 5px;" for="usr">{{data.branch}}</label><br></td>
     
     
       <div class="vl"></div>
@@ -104,9 +104,9 @@
        <div class="collapse" id="collapseTwoOne">
         
          <div class="files" *ngFor="let row of data.pullCommitDetailsByStatus['modified']">
-            <span ><img height=15 width=18 src="assets/images/file.png"> {{row.file}}</span>
+            <span ><img height=15 width=18 src="assets/images/file.PNG"> {{row.file}}</span>
            <span class="line-added" title="lines added">{{row.lineAdded || '0'}}</span>
-           <span class="line-removed" title="lines removed">{{row.lineRemoved || '0'}}</span>
+           <span class="line-removed" title="lines removed">{{row.linesRemoved || '0'}}</span>
          </div>
        </div>
      
@@ -117,9 +117,9 @@
        </div>
        <div class="collapse" id="collapseTwoThree">
          <div class="files" *ngFor="let row of data.pullCommitDetailsByStatus['added']">
-          <span><img height=15 width=18 src="assets/images/file.png"> {{row.file}}</span>
+          <span><img height=15 width=18 src="assets/images/file.PNG"> {{row.file}}</span>
            <span class="line-added">{{row.lineAdded || '0'}}</span>
-           <span class="line-removed">{{row.lineRemoved || '0'}}</span>
+           <span class="line-removed">{{row.linesRemoved || '0'}}</span>
          </div>
        </div>
       
@@ -129,9 +129,9 @@
        </a>
        <div class="collapse" id="collapseTwoFour">
          <div class="files" *ngFor="let row of data.pullCommitDetailsByStatus['removed']">
-           <span><img height=15 width=18 src="assets/images/file.png"> {{row.file}}</span>
+           <span><img height=15 width=18 src="assets/images/file.PNG"> {{row.file}}</span>
            <span class="line-added">{{row.lineAdded || '0'}}</span>
-           <span class="line-removed">{{row.lineRemoved || '0'}}</span>
+           <span class="line-removed">{{row.linesRemoved || '0'}}</span>
          </div>
        </div>
        </div>

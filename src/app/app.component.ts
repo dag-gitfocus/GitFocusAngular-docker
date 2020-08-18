@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
+import { KeycloakService } from '../app/utils/keycloak.service';
 
 
 @Component({
@@ -7,6 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   private isSideNavCollapsed: boolean = false;
   title = 'angular-app';
 
@@ -17,4 +20,17 @@ export class AppComponent {
   ngOnInit() {
     
   }
+ /* constructor(private router: Router) {
+    router.events.forEach(element => {
+        if (element instanceof NavigationStart && 
+           (element.url === '/secure-route-1' || 
+            element.url === '/secure-route-2')) {
+  
+          if (!KeycloakService.auth.loggedIn) {
+               KeycloakService.init().then(() => {})
+                  .catch(() => window.location.reload());
+             }
+        }
+    });
+  } */
 }

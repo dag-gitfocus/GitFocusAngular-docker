@@ -243,7 +243,7 @@ async getCommitDetails(){
       
         let {commitCount=0} = out.find(item => item.user == commitUser && item.commitDate == commitDate) || {};
         this.commitCount=commitCount;
-        commitData.push({x, y, r: Number(this.commitCount), commitUser, commitDate,commitCount});
+        commitData.push({x, y, r: Number(this.commitCount)*4, commitUser, commitDate,commitCount});
         
      });
     });
@@ -266,6 +266,7 @@ async getCommitDetails(){
     
 
     const out1:any=await this.gitService.getTeamPullDetails(this.team,this.repo,this.timeperiod,this.endDate).toPromise();
+console.log("pull****",out1);
 
     
   this.users = ["",...new Set(out1.map(item => item.user))];
@@ -282,6 +283,7 @@ async getCommitDetails(){
       console.log("pull****",out1.find(item => item.user == pullUser && item.prCreatedDate == prCreatedDate))
       this.prCount=prCount;
       pullData.push({x, y, r: Number(this.prCount)*4,pullUser,prCreatedDate,prCount });
+	  // pullData.push({x, y, r: Number(1)*4,pullUser,prCreatedDate,prCount });
     
    });
   });
@@ -302,20 +304,20 @@ async getCommitDetails(){
 
   
   const out2:any= await this.gitService.getPullReviewCount(this.team,this.repo,this.timeperiod,this.endDate).toPromise();
-  
+   console.log("PR Review",out2);
     this.users = ["",...new Set(out.map(item => item.user))];
     this.dates = ["",...new Set(out.map(item => item.commitDate))];
-    console.log("this.dates",this.dates);
+   
    
 
     let reviewData = [];
     this.dates.forEach((commitDate, x) => {
       
-      this.users.forEach((commitUser, y) => {
+      this.users.forEach((reviewUser, y) => {
       
-        let {commitCount=0} = out2.find(item => item.user == commitUser && item.commitDate == commitDate) || {};
+        let {commitCount=0} = out2.find(item => item.user == reviewUser && item.commitDate == commitDate) || {};
         this.reviewCount=commitCount;
-        reviewData.push({x, y, r: Number(this.reviewCount)*5, commitUser, commitDate,commitCount});
+        reviewData.push({x, y, r: Number(this.reviewCount)*4, reviewUser, commitDate,commitCount});
         
      });
     });
@@ -407,11 +409,12 @@ this.bubbleChartOptions={
         }
     }
 
-    if (dataPoint.hasOwnProperty('commitUser')) {
+    if (dataPoint.hasOwnProperty('reviewUser')) {
       cDate = dataPoint['commitDate'];
-      userName = dataPoint['commitUser'];
+      userName = dataPoint['reviewUser'];
       cCount=dataPoint['commitCount'];
       if (userName != '') {
+        console.log('User',userName);
         userNameToDisplay = "User : " + userName;
         dateValueToDisplay="Date :" +cDate;
         commitValueToDisplay="Review:"+ cCount;
